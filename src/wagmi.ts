@@ -1,23 +1,18 @@
 import { getDefaultConfig } from '@rainbow-me/rainbowkit';
+import { webSocket } from 'wagmi';
 import {
-  arbitrum,
-  base,
-  mainnet,
-  optimism,
   polygon,
-  sepolia,
 } from 'wagmi/chains';
 
 export const config = getDefaultConfig({
-  appName: 'RainbowKit App',
+  appName: 'pixelcoinflip',
   projectId: 'YOUR_PROJECT_ID',
   chains: [
-    mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
+    polygon
   ],
   ssr: true,
+  transports: {
+    [polygon.id]: webSocket('wss://polygon-mainnet.g.alchemy.com/v2/YUnppYpYem2Jf6S6s_6wVgOC8EQEw-4L'),
+    
+  },
 });
