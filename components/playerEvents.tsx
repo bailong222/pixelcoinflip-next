@@ -78,7 +78,7 @@ const PlayerEvents: React.FC = () => {
       setError(null); 
 
       if (!ETHERSCAN_API_KEY) {
-        setError("Etherscan API Key is not set. Please check your .env file and VITE_prefix.");
+        setError("Loading");
         setLoading(false);
         return;
       }
@@ -136,7 +136,7 @@ const PlayerEvents: React.FC = () => {
             setLastBlock(highestBlockInThisFetch);
           }
         } else {
-          setError(`Error from PolygonScan API: ${data.message} - ${data.result}`);
+          setError(`Error`);
           console.error("PolygonScan API Error:", data.message, "Result:", data.result);
         }
       } catch (err) {
@@ -145,7 +145,7 @@ const PlayerEvents: React.FC = () => {
         } else {
           setError("An unexpected error occurred.");
         }
-        console.error("Failed to fetch Roll events:", err);
+        console.error("Failed to fetch your bets", err);
       } finally {
         setLoading(false);
       }
@@ -164,7 +164,7 @@ const PlayerEvents: React.FC = () => {
 
   // --- Conditional Rendering for UI Feedback ---
   if (loading && events.length === 0) {
-    return <div className="p-4 text-center text-blue-600">Loading Roll events...</div>;
+    return <div className="p-4 text-center text-blue-600">Loading past bets...</div>;
   }
 
   if (error) {
@@ -172,7 +172,7 @@ const PlayerEvents: React.FC = () => {
   }
 
   if (!isConnected || !currentAccount) {
-    return <div className="p-4 text-center text-yellow-600">Please connect your wallet to see your Roll events.</div>;
+    return <div className="p-4 text-center text-yellow-600">Please connect your wallet to see your past bets.</div>;
   }
 
    const formatTimestamp = (timestamp: number): string => {

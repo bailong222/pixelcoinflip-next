@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import PlayerEvents from "../../components/playerEvents"
 import RollEvents from "../../components/events"
 
-const COIN_CONTRACT_ADDRESS: Hex = "0x74e7f9C3056f4921c3f0078dE2B8c662265BB66C";
+const COIN_CONTRACT_ADDRESS: Hex = "0xbe803aC7b640433ef0df196652a590d33E6afe5A";
 
 function CoinFlipGame() {
   const { address: playerAddress, isConnected } = useAccount();
@@ -477,7 +477,7 @@ function CoinFlipGame() {
         <PlayerEvents/>
         <div className='flex flex-row justify-between mt-2 text-white items-center'>
         <p>Your withdrawable balance: {formatEther(withdrawableBalance)} POL</p>
-        <button onClick={handleWithdraw} className='text-white bg-green-700 p-1 rounded'>withdraw</button>
+        <button onClick={handleWithdraw} className='text-white bg-green-700 p-1 px-2 rounded'>Withdraw</button>
         </div>
       </Modal>
       </>

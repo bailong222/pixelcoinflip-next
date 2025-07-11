@@ -82,7 +82,7 @@ const RollEvents: React.FC = () => {
 
       // Initial validation for essential configurations
       if (!ETHERSCAN_API_KEY) {
-        setError("Etherscan API Key is not set. Please check your .env file and VITE_ prefix.");
+        setError("Loading past bets");
         setLoading(false);
         return;
       }
@@ -158,7 +158,7 @@ const RollEvents: React.FC = () => {
           // Loading state handled in finally block.
         } else {
           // Handle API-specific errors (e.g., rate limits, invalid params)
-          setError(`Error from PolygonScan API: ${data.message} - ${data.result}`);
+          setError(`API error`);
           console.error("PolygonScan API Error:", data.message, "Result:", data.result);
         }
       } catch (err) {
@@ -168,7 +168,7 @@ const RollEvents: React.FC = () => {
         } else {
           setError("An unexpected error occurred.");
         }
-        console.error("Failed to fetch Roll events:", err);
+        console.error("Failed to fetch past bets", err);
       } finally {
         // Ensure loading is set to false after any fetch attempt (success or failure)
         setLoading(false);
@@ -195,7 +195,7 @@ const RollEvents: React.FC = () => {
   // --- Conditional Rendering for UI Feedback ---
   // Show loading indicator only if no events have been loaded yet
   if (loading && events.length === 0) {
-    return <div className="p-4 text-center text-blue-600">Loading Roll events...</div>;
+    return <div className="p-4 text-center text-blue-600">Loading past bets...</div>;
   }
 
   // Display error message if an error occurred
@@ -205,7 +205,7 @@ const RollEvents: React.FC = () => {
 
   // Display message if no events are found after loading
   if (events.length === 0) {
-    return <div className="p-4 text-center text-gray-500">No Roll events found for this contract.</div>;
+    return <div className="p-4 text-center text-gray-500">No past bets found for this contract.</div>;
   }
 
   // --- Main Event Display ---

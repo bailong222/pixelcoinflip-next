@@ -49,7 +49,7 @@ const myCustomTheme: Theme = {
     modalTextDim: '...',
     modalTextSecondary: '...',
     profileAction: 'rgba(0, 0, 0, 0)',
-    profileActionHover: 'rgba(0, 0, 0, 0.1)',
+    profileActionHover: 'rgba(162, 162, 162, 0.92)',
     profileForeground: 'rgba(0, 0, 0, 0)',
     selectedOptionBorder: 'rgba(0, 0, 0, 0)',
     standby: '...',

@@ -63,6 +63,7 @@ function Header() {
                     userSelect: 'none',
                   },
                 })}
+                className="hover:bg-blue-200/20 p-2 rounded"
               >
                 {(() => {
                   if (!connected) {
