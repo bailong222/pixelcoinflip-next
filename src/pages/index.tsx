@@ -59,7 +59,7 @@ function CoinFlipGame() {
 
   useEffect(() => {
     fetchPlayerBalance()
-  },[showResultScreen])
+  },[isWithdrawTxConfirmed])
 
   useEffect(() => {
     fetchPlayerBalance()
