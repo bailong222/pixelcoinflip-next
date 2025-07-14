@@ -21,7 +21,7 @@ html, body{
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px); /* Optional: slight slide up effect */
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;

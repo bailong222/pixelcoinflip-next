@@ -79,7 +79,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={client}>
         <RainbowKitProvider modalSize="compact" theme={myCustomTheme}>
           
-           <div className={`flex flex-col min-h-screen bg-gradient-to-r from-purple-900 to-indigo-950 ${tiny5.variable}`}>
+           <div className={`flex flex-col min-h-screen bg-gray-800 ${tiny5.variable}`}>
                 <div>
                   <Header />
                 </div>

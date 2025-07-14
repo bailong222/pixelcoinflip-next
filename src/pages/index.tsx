@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import PlayerEvents from "../../components/playerEvents"
 import RollEvents from "../../components/events"
 
-const COIN_CONTRACT_ADDRESS: Hex = "0xbe803aC7b640433ef0df196652a590d33E6afe5A";
+const COIN_CONTRACT_ADDRESS: Hex = "0x52B3a32de601eCE64f7DA82f9a2919a7f7678a24";
 
 function CoinFlipGame() {
   const { address: playerAddress, isConnected } = useAccount();
@@ -59,11 +59,11 @@ function CoinFlipGame() {
 
   useEffect(() => {
     fetchPlayerBalance()
-  },[isWithdrawTxConfirmed])
+  },[showResultScreen])
 
   useEffect(() => {
     fetchPlayerBalance()
-  },[])
+  },[isConnected])
 
   // Listen for the Roll event (this is what determines win/loss)
   useWatchContractEvent({
@@ -168,7 +168,7 @@ function CoinFlipGame() {
         functionName: 'withdrawWinnings',
       });
      setIsLoadingOutcome(false);
-     setShowResultScreen(false)
+     setShowResultScreen(false);
     } catch (err) {
       console.error("Error withdrawing:", err);
       // If withdrawal fails, still allow playing again by resetting the screen
@@ -177,7 +177,7 @@ function CoinFlipGame() {
       setIsLoadingOutcome(false);
     }
   };
-  // Combined disabled state for flip button
+ 
   const isFlipButtonDisabled = isLoadingOutcome || !isConnected;
 
   const router = useRouter(); // Initialize the router
@@ -216,9 +216,9 @@ function CoinFlipGame() {
   return (
     <>
      <Head>
-        <title>Pixelcoinflip: Decentralized gambling on the Polygon Blockchain</title>
+        <title>Pixelcoinflip: Decentralized gambling on the Sonic Blockchain</title>
         <meta
-          content="Coinflip betting game on the Polygon blockchain. Decentralized and fair. Connect your wallet, flip and withdraw"
+          content="Coinflip betting game on the Sonic blockchain. Decentralized and fair. Connect your wallet, flip and withdraw"
           name="description"
         />
         <link href="/favicon.png" rel="icon" />
@@ -299,6 +299,28 @@ function CoinFlipGame() {
     {/* Each bet button naturally flows into a 3-column layout */}
      <button
       type="button"
+      onClick={() => setBet('1')}
+      className={`
+        col-span-2
+        px-4 py-4
+        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+        text-white font-bold text-xl
+        rounded-xl
+        shadow-lg
+        transition-all duration-300 ease-in-out
+        ${bet === '1' ? "border-3 border-white" : "border-3 border-transparent"}
+        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+        hover:shadow-xl hover:-translate-y-1
+        active:scale-95 active:shadow-inner
+        disabled:opacity-50 disabled:cursor-not-allowed
+        flex items-center justify-center
+        gap-2
+      `}
+    >
+      1 S
+    </button>
+    <button
+      type="button"
       onClick={() => setBet('5')}
       className={`
         col-span-2
@@ -317,7 +339,7 @@ function CoinFlipGame() {
         gap-2
       `}
     >
-      5 <Image src="/polygon-logo.png" alt='polygon' height={30} width={30}/>
+      5 S
     </button>
     <button
       type="button"
@@ -339,7 +361,7 @@ function CoinFlipGame() {
         gap-2
       `}
     >
-      10 <Image src="/polygon-logo.png" alt='polygon' height={30} width={30}/>
+      10 S
     </button>
     <button
       type="button"
@@ -361,7 +383,7 @@ function CoinFlipGame() {
         gap-2
       `}
     >
-      20 <Image src="/polygon-logo.png" alt='polygon' height={30} width={30}/>
+      20 S
     </button>
     <button
       type="button"
@@ -383,7 +405,7 @@ function CoinFlipGame() {
         gap-2
       `}
     >
-      30 <Image src="/polygon-logo.png" alt='polygon' height={30} width={30}/>
+      30 S
     </button>
     <button
       type="button"
@@ -405,29 +427,7 @@ function CoinFlipGame() {
         gap-2
       `}
     >
-      40 <Image src="/polygon-logo.png" alt='polygon' height={30} width={30}/>
-    </button>
-    <button
-      type="button"
-      onClick={() => setBet('50')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '50' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      50 <Image src="/polygon-logo.png" alt='polygon' height={30} width={30}/>
+      40 S
     </button>
 
     {/* Flip Button */}
@@ -476,7 +476,7 @@ function CoinFlipGame() {
       <Modal isOpen={isBetsModalOpen} onClose={closeModal}>
         <PlayerEvents/>
         <div className='flex flex-row justify-between mt-2 text-white items-center'>
-        <p>Your withdrawable balance: {formatEther(withdrawableBalance)} POL</p>
+        <p>Your withdrawable balance: {formatEther(withdrawableBalance)} S</p>
         <button onClick={handleWithdraw} className='text-white bg-green-700 p-1 px-2 rounded'>Withdraw</button>
         </div>
       </Modal>

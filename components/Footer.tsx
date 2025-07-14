@@ -7,7 +7,6 @@ export default function Footer() {
 
   return (
     <footer className="
-      bg-gradient-to-r from-purple-900 to-indigo-950
       text-gray-200
       py-1 // Vertical padding
       shadow-inner-xl

@@ -52,10 +52,10 @@ const ROLL_EVENT_ABI = [
 const ROLL_EVENT_TOPIC0 = "0x6a36edc3de667e6793a2ba35d399e66bc104715b2cf33cf36188c64c5c90fc83";
 
 // Replace with your actual contract address on Polygon
-const CONTRACT_ADDRESS = "0x74e7f9C3056f4921c3f0078dE2B8c662265BB66C"; 
+const CONTRACT_ADDRESS = "0x52B3a32de601eCE64f7DA82f9a2919a7f7678a24"; // <<< IMPORTANT: Confirm this is correct for Polygon!
 
 // Accessing API key using import.meta.env, as specified for Vite
-const ETHERSCAN_API_KEY = 'KMVNWD4VA4QV6USFD52CQJ32YKV37KU7UP';
+const ETHERSCAN_API_KEY = '8JZEIVVIWPKAZYX9DFGBDXEKIHFP9VR5TW';
 
 const POLLING_INTERVAL = 5000; // Poll every 5 seconds
 
@@ -86,7 +86,7 @@ const PlayerEvents: React.FC = () => {
       const currentFromBlock = lastBlock ? lastBlock + 1 : 0;
       const toBlock = 'latest'; 
 
-      const url = `https://api.polygonscan.com/api?module=logs&action=getLogs&address=${CONTRACT_ADDRESS}&fromBlock=${currentFromBlock}&toBlock=${toBlock}&topic0=${ROLL_EVENT_TOPIC0}&apikey=${ETHERSCAN_API_KEY}`;
+      const url = `https://api.sonicscan.org/api?module=logs&action=getLogs&address=${CONTRACT_ADDRESS}&fromBlock=${currentFromBlock}&toBlock=${toBlock}&topic0=${ROLL_EVENT_TOPIC0}&apikey=${ETHERSCAN_API_KEY}`;
 
       try {
         const response = await axios.get(url);

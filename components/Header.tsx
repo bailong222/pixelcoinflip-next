@@ -40,7 +40,6 @@ function Header() {
 
         </div>
         <div>
-          {/* The ConnectButton from RainbowKit */}
           <ConnectButton.Custom>
           {({
             account,
@@ -74,7 +73,6 @@ function Header() {
                     );
                   }
 
-                  // If connected, but no chain is found (shouldn't happen often)
                   if (chain.unsupported) {
                     return (
                       <button onClick={openChainModal} type="button">
@@ -83,14 +81,11 @@ function Header() {
                     );
                   }
 
-                  // Connected and on supported network:
-                  // Only show balance
                   return (
                     <div style={{ display: 'flex', gap: 12 }}>
                       <button
                         onClick={openAccountModal}
                         type="button"
-                        // Optional: Add specific styles here to ensure no padding/border
                         style={{
                             border: 'none',
                             background: 'transparent',
