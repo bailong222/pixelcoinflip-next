@@ -37,8 +37,8 @@ export default function Footer() {
         {/* Social Media/Contact - Only icons remain */}
         <div className="md:w-1/3 text-center md:text-right">
           <div className="flex justify-center md:justify-end space-x-2"> {/* space-x-2 for spacing between icons */}
-            <Link href="https://pixelcoinflip.com"><Image src="/pixelcoindice.png" alt="pixelcoindice" width={40} height={40}/></Link>
-            <Link href="https://pixelcoinflip.com"><Image src="/icons8-x.svg" alt="X" width={40} height={40}/></Link>
+            <Link href="https://pixelcoindice.com"><Image src="/pixelcoindice.png" alt="pixelcoindice" width={40} height={40}/></Link>
+            <Link href="https://x.com/pixelcoinfl1p?s=21"><Image src="/icons8-x.svg" alt="X" width={40} height={40}/></Link>
         
           </div>
         </div>
