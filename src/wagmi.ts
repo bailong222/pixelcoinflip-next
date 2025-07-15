@@ -6,7 +6,7 @@ import {
 
 export const config = getDefaultConfig({
   appName: 'pixelcoinflip',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: '099e8b5b34a2d1e39fbe28772f347981',
   chains: [
     sonic
   ],

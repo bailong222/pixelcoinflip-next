@@ -114,8 +114,6 @@ function CoinFlipGame() {
         args: [BigInt(choice)],
         value: parseEther(bet),
       });
-      console.log(isLoadingOutcome)
-      // isFlippingTxPending will become true after this call, triggering loading UI
     } catch (err) {
       console.error("Error submitting flip transaction:", err);
       // Handle error: maybe show a user-friendly message
@@ -215,7 +213,7 @@ function CoinFlipGame() {
 
   return (
     <>
-     <Head>
+      <Head>
         <title>Pixelcoinflip: Decentralized gambling on the Sonic Blockchain</title>
         <meta
           content="Coinflip betting game on the Sonic blockchain. Decentralized and fair. Connect your wallet, flip and withdraw"
@@ -223,240 +221,251 @@ function CoinFlipGame() {
         />
         <link href="/favicon.png" rel="icon" />
       </Head>
-    <div className=" mx-auto rounded-lg w-1/3">
-          {isLoadingOutcome ? (
-            <div className="flex flex-col items-center justify-center min-h-[200px] gap-5 p-4">
-                <Image src="/giftest.gif" alt='loading' height={300} width={300} unoptimized/>
+      <div className="mx-auto w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-l xl:max-w-l">
+        {isLoadingOutcome ? (
+          <div className="flex flex-col items-center justify-center min-h-[200px] gap-5 p-4">
+            <Image src="/giftest.gif" alt="loading" height={300} width={300} unoptimized />
+          </div>
+        ) : showResultScreen && outcome ? (
+          <div
+            className={`mt-5 p-8 rounded-lg text-center min-h-[200px] flex flex-col items-center justify-center
+                          ${
+                            outcome.won
+                              ? 'bg-green-100 border border-green-400 text-green-700'
+                              : 'bg-red-100 border border-red-400 text-red-700'
+                          }`}
+          >
+            <h2 className="text-5xl font-extrabold mb-4 animate-bounce">
+              {outcome.won ? 'YOU WON!' : 'YOU LOST.'}
+            </h2>
+            <button
+              onClick={handleWithdrawAndPlayAgain}
+              className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-200 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {outcome.won ? 'Withdraw winnings' : "Play again"}
+            </button>
+          </div>
+        ) : (
+          <>
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-2 gap-4 mb-6 p-4 rounded-lg md:grid-cols-6 md:gap-4">
+                <h1 className="col-span-2 text-white text-center text-2xl mb-2 md:col-span-6">
+                  <strong>CHOOSE WHAT TO BET ON</strong>
+                </h1>
+
+                <button
+                  type="button"
+                  onClick={() => setChoice('0')}
+                  className={`
+                    col-span-1
+                    px-4 py-4
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-xl
+                    rounded-xl mb-4
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${choice === '0' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    md:col-span-3 md:px-8 md:py-5 md:text-2xl
+                  `}
+                >
+                  HEADS
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setChoice('1')}
+                  className={`
+                    col-span-1
+                    px-4 py-4
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-xl
+                    rounded-xl mb-4
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${choice === '1' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    md:col-span-3 md:px-8 md:py-5 md:text-2xl
+                  `}
+                >
+                  TAILS
+                </button>
+
+                <h1 className="col-span-2 text-white text-center text-2xl mb-2 md:col-span-6">
+                  <strong>CHOOSE A BET AMOUNT</strong>
+                </h1>
+
+                <button
+                  type="button"
+                  onClick={() => setBet('1')}
+                  className={`
+                    col-span-1
+                    px-2 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-lg
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${bet === '1' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    flex items-center justify-center
+                    gap-2
+                    md:col-span-2 md:px-4 md:py-4 md:text-xl
+                  `}
+                >
+                  1 S
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBet('5')}
+                  className={`
+                    col-span-1
+                    px-2 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-lg
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${bet === '5' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    flex items-center justify-center
+                    gap-2
+                    md:col-span-2 md:px-4 md:py-4 md:text-xl
+                  `}
+                >
+                  5 S
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBet('10')}
+                  className={`
+                    col-span-1
+                    px-2 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-lg
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${bet === '10' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    flex items-center justify-center
+                    gap-2
+                    md:col-span-2 md:px-4 md:py-4 md:text-xl
+                  `}
+                >
+                  10 S
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBet('20')}
+                  className={`
+                    col-span-1
+                    px-2 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-lg
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${bet === '20' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    flex items-center justify-center
+                    gap-2
+                    md:col-span-2 md:px-4 md:py-4 md:text-xl
+                  `}
+                >
+                  20 S
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBet('30')}
+                  className={`
+                    col-span-1
+                    px-2 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-lg
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${bet === '30' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    flex items-center justify-center
+                    gap-2
+                    md:col-span-2 md:px-4 md:py-4 md:text-xl
+                  `}
+                >
+                  30 S
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setBet('40')}
+                  className={`
+                    col-span-1
+                    px-2 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-lg
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    ${bet === '40' ? 'border-3 border-white' : 'border-3 border-transparent'}
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    disabled:opacity-50 disabled:cursor-not-allowed
+                    flex items-center justify-center
+                    gap-2
+                    md:col-span-2 md:px-4 md:py-4 md:text-xl
+                  `}
+                >
+                  40 S
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isFlipButtonDisabled}
+                  className="
+                    col-span-2
+                    px-4 py-3
+                    bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
+                    text-white font-bold text-xl
+                    rounded-xl
+                    shadow-lg
+                    transition-all duration-300 ease-in-out
+                    hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
+                    hover:shadow-xl hover:-translate-y-1
+                    active:scale-95 active:shadow-inner
+                    focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-75
+                    disabled:cursor-not-allowed
+                    md:col-span-6 md:px-8 md:py-4
+                  "
+                >
+                  FLIP COIN
+                </button>
               </div>
-          ) : showResultScreen && outcome ? (
-            // Result state: Show "You Won!" or "You Lost!" and a "Withdraw Winnings" button
-            <div className={`mt-5 p-8 rounded-lg text-center min-h-[200px] flex flex-col items-center justify-center
-                          ${outcome.won ? 'bg-green-100 border border-green-400 text-green-700' : 'bg-red-100 border border-red-400 text-red-700'}`}>
-              <h2 className="text-5xl font-extrabold mb-4 animate-bounce">
-                {outcome.won ? 'YOU WON!' : 'YOU LOST.'}
-              </h2>
-              <button
-                onClick={handleWithdrawAndPlayAgain}
-                className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-200 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {isWithdrawTxPending ? 'Withdrawing...' : (withdrawableBalance > 0n ? 'Claim Winnings' : 'Play Again')}
-              </button>
-            </div>
-          ) : (
-            // Default state: Show betting form
-            <>
-             <form onSubmit={handleSubmit}>
-  {/* Main grid container for the entire form: now 3 columns */}
-  <div className="grid grid-cols-6 gap-4 mb-6 p-4 rounded-lg">
-
-    {/* Heads and Tails Buttons Section */}
-    <h1 className='col-span-6 text-white text-center text-2xl mb-2'><strong>CHOOSE WHAT TO BET ON</strong></h1>
-
-    <button
-      type="button"
-      onClick={() => setChoice('0')}
-      className={`
-        col-span-3
-        px-8 py-5
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-2xl
-        rounded-xl mb-4
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${choice === '0' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-      `}
-    >
-      HEADS
-    </button>
-    <button
-      type="button"
-      onClick={() => setChoice('1')}
-      className={`
-        col-span-3
-        px-8 py-5
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-2xl
-        rounded-xl mb-4
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${choice === '1' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-      `}
-    >
-      TAILS
-    </button>
-
-    {/* Bet Amount Buttons Section */}
-    <h1 className='col-span-6 text-white text-center text-2xl mb-2'><strong>CHOOSE A BET AMOUNT</strong></h1>
-
-    {/* Each bet button naturally flows into a 3-column layout */}
-     <button
-      type="button"
-      onClick={() => setBet('1')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '1' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      1 S
-    </button>
-    <button
-      type="button"
-      onClick={() => setBet('5')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '5' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      5 S
-    </button>
-    <button
-      type="button"
-      onClick={() => setBet('10')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '10' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      10 S
-    </button>
-    <button
-      type="button"
-      onClick={() => setBet('20')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '20' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      20 S
-    </button>
-    <button
-      type="button"
-      onClick={() => setBet('30')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '30' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      30 S
-    </button>
-    <button
-      type="button"
-      onClick={() => setBet('40')}
-      className={`
-        col-span-2
-        px-4 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        ${bet === '40' ? "border-3 border-white" : "border-3 border-transparent"}
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        disabled:opacity-50 disabled:cursor-not-allowed
-        flex items-center justify-center
-        gap-2
-      `}
-    >
-      40 S
-    </button>
-
-    {/* Flip Button */}
-    <button
-      type="submit"
-      disabled={isFlipButtonDisabled}
-      className="
-        col-span-6
-        px-8 py-4
-        bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600
-        text-white font-bold text-xl
-        rounded-xl
-        shadow-lg
-        transition-all duration-300 ease-in-out
-        hover:from-yellow-500 hover:via-yellow-600 hover:to-yellow-700
-        hover:shadow-xl hover:-translate-y-1
-        active:scale-95 active:shadow-inner
-        focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-75
-        disabled:cursor-not-allowed
-      "
-    >
-      FLIP COIN
-    </button>
-  </div>
-</form>
-       </>
-          )}
-    {!isConnected && <RollEvents/>}
-    </div>
+            </form>
+          </>
+        )}
+        {!isConnected && <RollEvents />}
+      </div>
 
       {/* How To Play Modal */}
       <Modal isOpen={isHowToPlayModalOpen} onClose={closeModal}>
@@ -469,18 +478,22 @@ function CoinFlipGame() {
             <li>Withdraw and play again</li>
           </ol>
           <p className="mt-4 text-sm text-gray-300">
-            If your bet gets stuck for too long, dont worry. Everything is handled on the blockchain. Refresh and check your bets
+            If your bet gets stuck for too long, don't worry. Everything is handled on the blockchain. Refresh and check your bets
           </p>
         </div>
       </Modal>
+
+      {/* Player Bets Modal */}
       <Modal isOpen={isBetsModalOpen} onClose={closeModal}>
-        <PlayerEvents/>
-        <div className='flex flex-row justify-between mt-2 text-white items-center'>
-        <p>Your withdrawable balance: {formatEther(withdrawableBalance)} S</p>
-        <button onClick={handleWithdraw} className='text-white bg-green-700 p-1 px-2 rounded'>Withdraw</button>
+        <PlayerEvents />
+        <div className="flex flex-row justify-between mt-2 text-white items-center">
+          <p>Your withdrawable balance: {formatEther(withdrawableBalance)} S</p>
+          <button onClick={handleWithdraw} className="text-white bg-green-700 p-1 px-2 rounded">
+            Withdraw
+          </button>
         </div>
       </Modal>
-      </>
+    </>
   );
 }
 
