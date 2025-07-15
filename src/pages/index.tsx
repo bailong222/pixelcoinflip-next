@@ -478,7 +478,7 @@ function CoinFlipGame() {
             <li>Withdraw and play again</li>
           </ol>
           <p className="mt-4 text-sm text-gray-300">
-            If your bet gets stuck for too long, don't worry. Everything is handled on the blockchain. Refresh and check your bets
+            If your bet gets stuck for too long, don&apos;t worry. Everything is handled on the blockchain. Refresh and check your bets
           </p>
         </div>
       </Modal>
