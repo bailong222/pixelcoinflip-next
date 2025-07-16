@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import PlayerEvents from "../../components/playerEvents"
 import RollEvents from "../../components/events"
 
-const COIN_CONTRACT_ADDRESS: Hex = "0x52B3a32de601eCE64f7DA82f9a2919a7f7678a24";
+const COIN_CONTRACT_ADDRESS: Hex = "0x8d89670fE63E55b19B9C49972371D89451a94c10";
 
 function CoinFlipGame() {
   const { address: playerAddress, isConnected } = useAccount();

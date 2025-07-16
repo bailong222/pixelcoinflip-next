@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { ethers } from 'ethers';
+import { ethers, formatEther } from 'ethers';
 
 
 // Define the type for a decoded Roll event
@@ -8,6 +8,7 @@ interface RollEvent {
   blockNumber: number;
   transactionHash: string;
   player: string;
+  amount: number,
   choice: number;
   outcome: number;
   won: boolean;
@@ -17,7 +18,7 @@ interface RollEvent {
 // This ABI is crucial for ethers.js to decode the log data correctly.
 // Based on your specific input, this is how you defined it.
 const ROLL_EVENT_ABI = [
-  {
+   {
       "anonymous": false,
       "inputs": [
         {
@@ -25,6 +26,12 @@ const ROLL_EVENT_ABI = [
           "internalType": "address",
           "name": "player",
           "type": "address"
+        },
+        {
+          "indexed": false,
+          "internalType": "uint256",
+          "name": "amount",
+          "type": "uint256"
         },
         {
           "indexed": false,
@@ -52,10 +59,10 @@ const ROLL_EVENT_ABI = [
 
 // Calculate the event topic0 (Keccak-256 hash of the signature)
 // Using the exact value you provided.
-const ROLL_EVENT_TOPIC0 = "0x6a36edc3de667e6793a2ba35d399e66bc104715b2cf33cf36188c64c5c90fc83";
+const ROLL_EVENT_TOPIC0 = "0x9d4f0f00f06d0c9cb3a6b4425bf3a6537017a58de4a32674770bc910693d2158";
 
 // Replace with your actual contract address on Polygon
-const CONTRACT_ADDRESS = "0x52B3a32de601eCE64f7DA82f9a2919a7f7678a24"; // <<< IMPORTANT: Confirm this is correct for Polygon!
+const CONTRACT_ADDRESS = "0x8d89670fE63E55b19B9C49972371D89451a94c10"; // <<< IMPORTANT: Confirm this is correct for Polygon!
 
 // Accessing API key using import.meta.env, as specified for Vite
 const ETHERSCAN_API_KEY = '8JZEIVVIWPKAZYX9DFGBDXEKIHFP9VR5TW';
@@ -122,6 +129,7 @@ const RollEvents: React.FC = () => {
                   blockNumber: blockNum,
                   transactionHash: eventLog.transactionHash,
                   player: parsedLog.args.player,
+                  amount: parsedLog.args.amount,
                   choice: Number(parsedLog.args.choice), // Convert BigInt to number for display
                   outcome: Number(parsedLog.args.outcome),
                   won: parsedLog.args.won,
@@ -216,7 +224,7 @@ const RollEvents: React.FC = () => {
         {events.slice(0, 6).map((event) => (
           <div key={event.transactionHash} className=" p-2 rounded-md text-white">
             <p>
-              Player <span className="font-medium text-white">{event.player?.slice(0, 6)}...{event.player?.slice(-4)} chose {event.choice == 0 ? "Heads" : "Tails"} and <span className="text-white">{event.won ? "Won" : "Lost"}</span>
+              Player <span className="font-medium text-white">{event.player?.slice(0, 6)}...{event.player?.slice(-4)} bet {formatEther(event.amount)} Sonic on {event.choice == 0 ? "Heads" : "Tails"} and <span className="text-white">{event.won ? "Won" : "Lost"}</span>
               </span>
             </p>
           
