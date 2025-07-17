@@ -165,8 +165,6 @@ function CoinFlipGame() {
         address: COIN_CONTRACT_ADDRESS,
         functionName: 'withdrawWinnings',
       });
-     setIsLoadingOutcome(false);
-     setShowResultScreen(false);
     } catch (err) {
       console.error("Error withdrawing:", err);
       // If withdrawal fails, still allow playing again by resetting the screen
@@ -177,6 +175,16 @@ function CoinFlipGame() {
   };
  
   const isFlipButtonDisabled = isLoadingOutcome || !isConnected;
+
+  useEffect(() => {
+        if (isWithdrawTxConfirmed) {
+            setOutcome(null);
+            setShowResultScreen(false);
+        } else if (withdrawError) {
+            setOutcome(null);
+            setShowResultScreen(false);
+        }
+    }, [isWithdrawTxConfirmed, withdrawError]);
 
   const router = useRouter(); // Initialize the router
   const { modal } = router.query; // Destructure the 'modal' query parameter
@@ -211,6 +219,7 @@ function CoinFlipGame() {
     router.push(router.pathname, undefined, { shallow: true });
   };
 
+  
   return (
     <>
       <Head>
@@ -242,7 +251,7 @@ function CoinFlipGame() {
               onClick={handleWithdrawAndPlayAgain}
               className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-200 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {outcome.won ? 'Withdraw winnings' : "Play again"}
+              {isWithdrawTxPending || isWithdrawTxConfirming ? "Withdrawing..." : (withdrawableBalance > 0n ? 'Withdraw winnings' : 'Play Again')}
             </button>
           </div>
         ) : (
