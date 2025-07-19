@@ -27,7 +27,7 @@ export default function Footer() {
               text-lg font-extrabold
               text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-500
             ">
-              PIXELCOINFLIP
+              Broflip
             </h3>
           <p className="text-xxs mt-0.5 text-gray-400"> {/* Assuming text-xxs is defined, otherwise use text-xs */}
             Decentralized Gaming
@@ -37,8 +37,8 @@ export default function Footer() {
         {/* Social Media/Contact - Only icons remain */}
         <div className="md:w-1/3 text-center md:text-right">
           <div className="flex justify-center md:justify-end space-x-2"> {/* space-x-2 for spacing between icons */}
-            <Link href="https://pixelcoindice.com" target="blank"><Image src="/pixelcoindice.png" alt="pixelcoindice" width={40} height={40}/></Link>
-            <Link href="https://x.com/pixelcoinfl1p?s=21" target="blank"><Image src="/icons8-x.svg" alt="X" width={40} height={40}/></Link>
+            <Link href="https://dice.broflip.com" target="blank"><Image src="/pixelcoindice.png" alt="pixelcoindice" width={40} height={40}/></Link>
+            <Link href="https://x.com/broflip_com" target="blank"><Image src="/icons8-x.svg" alt="X" width={40} height={40}/></Link>
         
           </div>
         </div>
@@ -51,7 +51,7 @@ export default function Footer() {
         text-center text-gray-500 text-xxs // Assuming text-xxs is defined, otherwise use text-xs
         // Removed mt-2 and pt-1 for no margin/padding
       ">
-        &copy; {currentYear} PIXELCOINFLIP. All rights reserved.
+        &copy; {currentYear} Broflip. All rights reserved.
       </div>
     </footer>
   );

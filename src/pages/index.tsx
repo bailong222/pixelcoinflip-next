@@ -223,7 +223,7 @@ function CoinFlipGame() {
   return (
     <>
       <Head>
-        <title>Pixelcoinflip | Decentralized gambling on the Sonic Blockchain</title>
+        <title>Broflip | Decentralized gambling on the Sonic Blockchain</title>
         <meta
           content="Coinflip betting game on the Sonic blockchain. Decentralized and fair. Connect your wallet, flip and withdraw"
           name="description"
