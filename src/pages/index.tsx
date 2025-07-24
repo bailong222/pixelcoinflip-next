@@ -250,6 +250,7 @@ function CoinFlipGame() {
             <button
               onClick={handleWithdrawAndPlayAgain}
               className="px-8 py-3 bg-blue-600 text-white font-bold rounded-lg shadow-lg hover:bg-blue-700 transition-colors duration-200 text-xl disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={isWithdrawTxConfirming || isWithdrawTxPending}
             >
               {isWithdrawTxPending || isWithdrawTxConfirming ? "Withdrawing..." : (withdrawableBalance > 0n ? 'Withdraw winnings' : 'Play Again')}
             </button>
